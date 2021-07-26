@@ -22,6 +22,7 @@ import {
   useColorScheme,
   View,
   Pressable,
+  Image,
 } from 'react-native';
 
 import {
@@ -123,9 +124,9 @@ const App: () => Node = () => {
   };
 
   const addProduct = () => {
-    console.log("entra add");
+    console.log('entra add');
     if (parseFloat(precio) > 0 && nombre && marca && modelo && clasificacion) {
-      console.log("nuevo");
+      console.log('nuevo');
       fetch('http://192.168.100.21:8000/api/products', {
         method: 'POST',
         headers: {
@@ -147,17 +148,24 @@ const App: () => Node = () => {
           let temp = list;
           for (let index = 0; index < temp.length; index++) {
             console.log(index);
-            if(!(index >= temp.length)){
-              if(data.precio > list[index].precio &&  data.precio < list[index+1].precio) {
-                console.log(data.precio, list[index].precio, list[index+1].precio)
+            if (!(index >= temp.length)) {
+              if (
+                data.precio > list[index].precio &&
+                data.precio < list[index + 1].precio
+              ) {
+                console.log(
+                  data.precio,
+                  list[index].precio,
+                  list[index + 1].precio,
+                );
                 //console.log("entra");
-                list.splice(index+1, 0, data);
+                list.splice(index + 1, 0, data);
                 index = temp.length;
-              }else {
-                console.log("Aun no se inserta");
+              } else {
+                console.log('Aun no se inserta');
               }
-            }else {
-              console.log("Index llego al final");
+            } else {
+              console.log('Index llego al final');
             }
           }
           setModalVisible(false);
@@ -251,13 +259,6 @@ const App: () => Node = () => {
 
   return (
     <View style={{padding: 10}}>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => {
-          openAddModal();
-        }}>
-        <Text style={styles.textStyle}>Nuevo</Text>
-      </Pressable>
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -360,6 +361,12 @@ const App: () => Node = () => {
                 <Text style={styles.text_id}>{item.id}</Text>
               </View>
               <View style={styles.box}>
+                <Image
+                  style={styles.tinyLogo}
+                  source={{
+                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                  }}
+                />
                 <Text style={styles.text}>{item.nombre}</Text>
               </View>
               <View style={styles.box}>
@@ -392,7 +399,7 @@ const App: () => Node = () => {
                 <Pressable
                   style={[styles.button, styles.buttonDelete]}
                   onPress={() => {
-                    deleteProduct(item.id)
+                    deleteProduct(item.id);
                   }}>
                   <Text style={styles.textStyle}>Eliminar</Text>
                 </Pressable>
@@ -516,6 +523,10 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
   },
 });
 
