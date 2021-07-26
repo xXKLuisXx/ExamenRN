@@ -259,6 +259,13 @@ const App: () => Node = () => {
 
   return (
     <View style={{padding: 10}}>
+      <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => {
+          openAddModal();
+        }}>
+        <Text style={styles.textStyle}>Nuevo</Text>
+      </Pressable>
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
